@@ -655,5 +655,39 @@
         "x": 560,
         "y": 300,
         "wires": []
+    },
+    {
+        "id": "3edf68f.5361d98",
+        "type": "schedex",
+        "z": "342a5e81.ea2d92",
+        "name": "Daily Dash Trigger",
+        "passthroughunhandled": false,
+        "suspended": false,
+        "lat": "",
+        "lon": "",
+        "ontime": "07:30",
+        "ontopic": "",
+        "onpayload": "",
+        "onoffset": 0,
+        "onrandomoffset": 0,
+        "offtime": "",
+        "offtopic": "",
+        "offpayload": "",
+        "offoffset": 0,
+        "offrandomoffset": 0,
+        "mon": true,
+        "tue": true,
+        "wed": true,
+        "thu": true,
+        "fri": true,
+        "sat": false,
+        "sun": false,
+        "x": 820,
+        "y": 240,
+        "wires": [
+            [
+                "f2c34e92.95b39"
+            ]
+        ]
     }
 ]
