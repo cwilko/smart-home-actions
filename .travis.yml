@@ -14,4 +14,4 @@ install:
 script:
   - docker run -d --rm cwilko/smart-home-actions:arm32v7
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push cwilko/smart-home-actions
+  - docker push cwilko/smart-home-actions:arm32v7
