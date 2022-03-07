@@ -234,7 +234,7 @@
         "qos": "",
         "retain": "",
         "broker": "87b9b09.9bbcf5",
-        "x": 820,
+        "x": 880,
         "y": 400,
         "wires": []
     },
@@ -687,6 +687,109 @@
         "wires": [
             [
                 "f2c34e92.95b39"
+            ]
+        ]
+    },
+    {
+        "id": "5fa88632.2e9968",
+        "type": "mqtt in",
+        "z": "edeb291e.447a98",
+        "name": "zigbee sensor",
+        "topic": "tele/tasmota/SENSOR",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "87b9b09.9bbcf5",
+        "x": 230,
+        "y": 300,
+        "wires": [
+            [
+                "8bcb4446.1af5a8"
+            ]
+        ]
+    },
+    {
+        "id": "8bcb4446.1af5a8",
+        "type": "function",
+        "z": "edeb291e.447a98",
+        "name": "getDeviceResult",
+        "func": "var deviceId = Object.keys(msg.payload.ZbReceived)[0];\nvar sensorInfo = msg.payload.ZbReceived[deviceId]\n\nvar result = {\n    \"id\": sensorInfo.Device,\n    \"name\": sensorInfo.Name,\n    \"signal\": sensorInfo.LinkQuality\n}\n\nif (sensorInfo.hasOwnProperty(\"Humidity\")) {\n    result[\"type\"] = \"humidity\"\n    result[\"value\"] = sensorInfo.Humidity\n}\n\nif (sensorInfo.hasOwnProperty(\"Temperature\")) {\n    result[\"type\"] = \"temp\"\n    result[\"value\"] = sensorInfo.Temperature\n}\n\nif (sensorInfo.hasOwnProperty(\"BatteryPercentage\")) {\n    result[\"type\"] = \"battery\"\n    result[\"value\"] = sensorInfo.BatteryPercentage\n}\n\n\n\nreturn {\n    payload: result\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 440,
+        "y": 300,
+        "wires": [
+            [
+                "37038949.004fe6"
+            ]
+        ]
+    },
+    {
+        "id": "1928f8f3.12eca7",
+        "type": "template",
+        "z": "edeb291e.447a98",
+        "name": "Influx convert",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "climate,id={{payload.id}},name={{payload.name}} {{payload.type}}={{payload.value}}",
+        "output": "str",
+        "x": 870,
+        "y": 300,
+        "wires": [
+            [
+                "2f0922aa.71020e"
+            ]
+        ]
+    },
+    {
+        "id": "2f0922aa.71020e",
+        "type": "mqtt out",
+        "z": "edeb291e.447a98",
+        "name": "influx out",
+        "topic": "telegraf/sensors/climate",
+        "qos": "",
+        "retain": "",
+        "broker": "87b9b09.9bbcf5",
+        "x": 1060,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "37038949.004fe6",
+        "type": "change",
+        "z": "edeb291e.447a98",
+        "name": "mapNames",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload.name",
+                "pt": "msg",
+                "from": "Device1",
+                "fromt": "str",
+                "to": "Master\\ Bedroom",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.name",
+                "pt": "msg",
+                "from": "Device2",
+                "fromt": "str",
+                "to": "Study",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 300,
+        "wires": [
+            [
+                "1928f8f3.12eca7"
             ]
         ]
     }
