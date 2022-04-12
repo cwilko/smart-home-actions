@@ -774,9 +774,54 @@
                 "t": "change",
                 "p": "payload.name",
                 "pt": "msg",
+                "from": "Device4",
+                "fromt": "str",
+                "to": "Server\\ Cabinet",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.name",
+                "pt": "msg",
                 "from": "Device2",
                 "fromt": "str",
                 "to": "Study",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.name",
+                "pt": "msg",
+                "from": "Device3",
+                "fromt": "str",
+                "to": "Harry\\ Bedroom",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.name",
+                "pt": "msg",
+                "from": "Device5",
+                "fromt": "str",
+                "to": "Lounge",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.name",
+                "pt": "msg",
+                "from": "Device6",
+                "fromt": "str",
+                "to": "Bathroom",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.name",
+                "pt": "msg",
+                "from": "Device7",
+                "fromt": "str",
+                "to": "Main\\ Loft",
                 "tot": "str"
             }
         ],
