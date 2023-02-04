@@ -1,4 +1,4 @@
-FROM cwilko/faas-node-red:arm32v7
+FROM cwilko/faas-node-red
 
 RUN npm install node-red-contrib-webhookrelay
 RUN npm install node-red-contrib-pushover
