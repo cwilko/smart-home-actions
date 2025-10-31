@@ -60,6 +60,22 @@
         "verifyservercert": false
     },
     {
+        "id": "87ded001b4187ee9",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-pushover": "0.2.0",
+            "node-red-contrib-slack": "2.1.0",
+            "node-red-contrib-webhookrelay": "0.3.0",
+            "node-red-contrib-schedex": "1.10.7"
+        }
+    },
+    {
+        "id": "62657d98101b8f4c",
+        "type": "slack-config",
+        "name": "SquirrelSlack"
+    },
+    {
         "id": "d025850.b5baf78",
         "type": "mqtt in",
         "z": "523660f.200d1a",
@@ -150,11 +166,13 @@
             [
                 "ea425031.e907",
                 "5196eeb.895001",
-                "9f67ad22.561d1"
+                "9f67ad22.561d1",
+                "ad57588d9481b7b2"
             ],
             [
                 "ea425031.e907",
-                "9f67ad22.561d1"
+                "9f67ad22.561d1",
+                "ad57588d9481b7b2"
             ]
         ]
     },
@@ -274,6 +292,38 @@
         "wires": [
             [
                 "8a7f66c9.d4b768"
+            ]
+        ]
+    },
+    {
+        "id": "ebcb033011af4820",
+        "type": "slack-web-out",
+        "z": "523660f.200d1a",
+        "client": "62657d98101b8f4c",
+        "name": "",
+        "x": 1240,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad57588d9481b7b2",
+        "type": "function",
+        "z": "523660f.200d1a",
+        "name": "FormatForSlack",
+        "func": "msg.topic = \"chat.meMessage\"\n\nmsg.payload = {\n    channel: \"notifications\",\n    text: msg.payload\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 500,
+        "wires": [
+            [
+                "ebcb033011af4820"
             ]
         ]
     },
@@ -840,15 +890,5 @@
                 "f2c34e92.95b39"
             ]
         ]
-    },
-    {
-        "id": "87ded001b4187ee9",
-        "type": "global-config",
-        "env": [],
-        "modules": {
-            "node-red-contrib-pushover": "0.2.0",
-            "node-red-contrib-webhookrelay": "0.3.0",
-            "node-red-contrib-schedex": "1.10.7"
-        }
     }
 ]
