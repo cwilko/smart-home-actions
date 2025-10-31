@@ -328,6 +328,30 @@
         ]
     },
     {
+        "id": "7602f630f339f13f",
+        "type": "mqtt in",
+        "z": "523660f.200d1a",
+        "name": "Manual alerts",
+        "topic": "alerts/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "87b9b09.9bbcf5",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 730,
+        "y": 580,
+        "wires": [
+            [
+                "ad57588d9481b7b2",
+                "5196eeb.895001",
+                "ea425031.e907",
+                "9f67ad22.561d1"
+            ]
+        ]
+    },
+    {
         "id": "f1448e51.b5356",
         "type": "mqtt in",
         "z": "edeb291e.447a98",
