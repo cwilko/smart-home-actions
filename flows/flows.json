@@ -305,7 +305,8 @@
         "y": 500,
         "wires": [
             []
-        ]
+        ],
+        "info": "See here for secret mgmt:\n\nhttps://api.slack.com/apps/A09PPCPTV5G"
     },
     {
         "id": "ad57588d9481b7b2",
