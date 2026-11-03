@@ -85,7 +85,7 @@
         "datatype": "auto",
         "broker": "87b9b09.9bbcf5",
         "inputs": 0,
-        "x": 240,
+        "x": 100,
         "y": 280,
         "wires": [
             [
@@ -112,6 +112,20 @@
                 "pt": "msg",
                 "to": "$split(msg.topic,\"/\")[1]",
                 "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "device",
+                "pt": "msg",
+                "to": "$split(msg.topic,\"/\")[3]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "notifications",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -119,11 +133,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 520,
+        "x": 380,
         "y": 280,
         "wires": [
             [
-                "a05fb76.4ed4448"
+                "2c45c438a442b479"
             ]
         ]
     },
@@ -160,18 +174,16 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 740,
+        "x": 800,
         "y": 280,
         "wires": [
             [
                 "ea425031.e907",
                 "5196eeb.895001",
-                "9f67ad22.561d1",
                 "ad57588d9481b7b2"
             ],
             [
                 "ea425031.e907",
-                "9f67ad22.561d1",
                 "ad57588d9481b7b2"
             ]
         ]
@@ -190,44 +202,6 @@
         "wires": []
     },
     {
-        "id": "989ecb9.ab61638",
-        "type": "http request",
-        "z": "523660f.200d1a",
-        "name": "logDNA",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": false,
-        "url": "https://logs.logdna.com/logs/ingest?hostname=SquirrelCottage",
-        "tls": "63c22f12.3715a",
-        "persist": false,
-        "proxy": "",
-        "authType": "bearer",
-        "x": 1200,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9f67ad22.561d1",
-        "type": "template",
-        "z": "523660f.200d1a",
-        "name": "http body",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "{\n    \"lines\": [\n        {\n            \"line\": \"Example's {{{payload}}}\",\n            \"app\": \"{{{class}}}\",\n            \"level\": \"INFO\"\n        }\n    ]\n}",
-        "output": "json",
-        "x": 1020,
-        "y": 160,
-        "wires": [
-            [
-                "989ecb9.ab61638"
-            ]
-        ]
-    },
-    {
         "id": "53146167.60cff",
         "type": "mqtt in",
         "z": "523660f.200d1a",
@@ -237,7 +211,7 @@
         "datatype": "auto",
         "broker": "87b9b09.9bbcf5",
         "inputs": 0,
-        "x": 250,
+        "x": 110,
         "y": 440,
         "wires": [
             [
@@ -271,7 +245,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 580,
+        "x": 440,
         "y": 440,
         "wires": [
             [
@@ -287,7 +261,7 @@
         "property": "payload",
         "action": "",
         "pretty": true,
-        "x": 410,
+        "x": 270,
         "y": 440,
         "wires": [
             [
@@ -313,7 +287,7 @@
         "type": "function",
         "z": "523660f.200d1a",
         "name": "FormatForSlack",
-        "func": "msg.topic = \"chat.meMessage\"\n\nmsg.payload = {\n    channel: \"notifications\",\n    text: msg.payload\n}\nreturn msg;",
+        "func": "msg.topic = \"chat.meMessage\"\n\nmsg.payload = {\n    channel: msg.channel,\n    text: msg.payload\n}\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -347,8 +321,88 @@
             [
                 "ad57588d9481b7b2",
                 "5196eeb.895001",
-                "ea425031.e907",
-                "9f67ad22.561d1"
+                "ea425031.e907"
+            ]
+        ]
+    },
+    {
+        "id": "2c45c438a442b479",
+        "type": "switch",
+        "z": "523660f.200d1a",
+        "name": "",
+        "property": "device",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "whatsapp",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 590,
+        "y": 160,
+        "wires": [
+            [
+                "72e4f6a2eb5e4970"
+            ],
+            [
+                "a05fb76.4ed4448"
+            ]
+        ]
+    },
+    {
+        "id": "72e4f6a2eb5e4970",
+        "type": "json",
+        "z": "523660f.200d1a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 590,
+        "y": 100,
+        "wires": [
+            [
+                "204f188683c813da"
+            ]
+        ]
+    },
+    {
+        "id": "204f188683c813da",
+        "type": "change",
+        "z": "523660f.200d1a",
+        "name": "WhatsappToSlack",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload.sender & \": \" & msg.payload.content",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "channel",
+                "pt": "msg",
+                "to": "family",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 630,
+        "y": 40,
+        "wires": [
+            [
+                "a05fb76.4ed4448"
             ]
         ]
     },
