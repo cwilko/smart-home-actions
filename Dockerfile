@@ -4,6 +4,7 @@ RUN npm install node-red-contrib-webhookrelay
 RUN npm install node-red-contrib-pushover
 RUN npm install node-red-contrib-schedex
 RUN npm install node-red-contrib-slack
+RUN npm install node-red-contrib-slack-modern
 
 COPY flows/* /data/
 
