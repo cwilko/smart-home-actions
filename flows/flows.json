@@ -47,19 +47,6 @@
         "name": ""
     },
     {
-        "id": "63c22f12.3715a",
-        "type": "tls-config",
-        "name": "",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "",
-        "keyname": "",
-        "caname": "",
-        "servername": "",
-        "verifyservercert": false
-    },
-    {
         "id": "87ded001b4187ee9",
         "type": "global-config",
         "env": [],
@@ -137,7 +124,8 @@
         "y": 280,
         "wires": [
             [
-                "2c45c438a442b479"
+                "2c45c438a442b479",
+                "a05fb76.4ed4448"
             ]
         ]
     },
@@ -382,7 +370,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.sender & \": \" & msg.payload.content",
+                "to": "msg.payload.sender_name & (msg.payload.is_group ? \"@\" & msg.payload.chat_name : \"\") & \": \" & msg.payload.content",
                 "tot": "jsonata"
             },
             {
